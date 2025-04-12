@@ -1,0 +1,2835 @@
+{
+  "name": "optimo supabase",
+  "nodes": [
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        420,
+        540
+      ],
+      "id": "897ff150-9d8c-44e2-8f83-33994af63eb3",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "HzUbMxuj31f3gNlB",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -500,
+        1360
+      ],
+      "id": "c7a618de-3431-481f-ad33-7e1f299ffbc7",
+      "name": "Telegram Trigger",
+      "webhookId": "4f2d24bd-098a-4996-abff-1be0f6adba53",
+      "credentials": {
+        "telegramApi": {
+          "id": "KQQmdAin1gigJdjL",
+          "name": "Telegram account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3a24c278-4425-4f11-ba87-51509876557a",
+              "name": "chatId",
+              "value": "={{ $json.message.chat.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -320,
+        1360
+      ],
+      "id": "3d867a03-85e7-4233-bf15-51adb39ba636",
+      "name": "Set Chat ID"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Prepare State & Defaults').item.json.currentState }}",
+                    "rightValue": "START",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "8f102e7a-7dae-442b-ae31-031cd076285b"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "60eaaf41-8004-4525-ad37-252c95396bef",
+                    "leftValue": "={{ $('Prepare State & Defaults').item.json.currentState }}",
+                    "rightValue": "WAITING_FOR_LANGUAGE",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "99783a7f-53eb-4053-b129-12a14263b675",
+                    "leftValue": "={{ $('Prepare State & Defaults').item.json.currentState }}",
+                    "rightValue": "ASKING_RESPONSE_PREFERENCE",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "70088e11-f2f9-4f9f-bc3a-6b5d9520ed1b",
+                    "leftValue": "={{ $('Prepare State & Defaults').item.json.currentState }}",
+                    "rightValue": "WAITING_FOR_INTEREST",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "d9a0f7bf-cf11-49be-8b4f-bb33af676fc6",
+                    "leftValue": "={{ $('Prepare State & Defaults').item.json.currentState }}",
+                    "rightValue": "WAITING_FOR_QUALIFICATIONS",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "470dd42d-7f1d-4667-98a7-1271cc8b780a",
+                    "leftValue": "={{ $('Prepare State & Defaults').item.json.currentState }}",
+                    "rightValue": "WAITING_FOR_FOLLOWUP_TIME",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "d7bb6e58-09f2-46bf-a64e-2d4781acdcfa",
+                    "leftValue": "={{ $('Prepare State & Defaults').item.json.currentState }}",
+                    "rightValue": "END",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        200,
+        1260
+      ],
+      "id": "a6341ec8-d88b-47ff-b94f-d90b0af83b95",
+      "name": "State Router"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Prepare State & Defaults').item.json.userMessage }}",
+        "options": {
+          "systemMessage": "You are a friendly assistant for Optimo Capital, a company granting property loans.\nYour first task is to greet the user and introduce Optimo Capital briefly.\nThen, ask them to select their preferred language.\nPresent the language options clearly:\n1. English\n2. Kannada\n3. Tamil\n4. Telugu\n5. Hindi\nKeep the tone welcoming. Do not add any pleasantries like \"How can I help you today?\" yet. Just provide the greeting, intro, and language question."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        400,
+        380
+      ],
+      "id": "dbcc1677-8f34-4578-83bd-fc5ce3f0e389",
+      "name": "AI Agent - Greet & Ask Language"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.chatId }}",
+        "text": "={{ $json.aiResponse }}",
+        "additionalFields": {
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1940,
+        1400
+      ],
+      "id": "cc6cf58e-d888-4fb7-aca0-6087c294e49b",
+      "name": "Send Telegram Response",
+      "webhookId": "0fa90b4a-f773-4984-b69a-d9aa89fab6b3",
+      "alwaysOutputData": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "KQQmdAin1gigJdjL",
+          "name": "Telegram account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Conversation History:\\n{{ JSON.stringify($('Prepare State & Defaults').item.json.conversationHistory) }}\\n\\nUser message: {{ $('Prepare State & Defaults').item.json.userMessage }}\n\n",
+        "options": {
+          "systemMessage": "You are a friendly assistant for Optimo Capital.\nThe user was previously asked to select a language from: English, Kannada, Tamil, Telugu, Hindi.\nAnalyze the latest \"User message\" to determine which language they selected.\nOutput ONLY a JSON object with the following structure:\n{\n  \"selectedLanguage\": \"<ChosenLanguage>\", // e.g., \"Kannada\", \"Hindi\", \"English\", etc. or \"Unknown\" if unclear\n  \"nextMessage\": \"<Message confirming language and asking for response preference (Text/Voice) in that language>\"\n}\n\nExample Task: User message is \"1\" (assuming English was option 1)\nExample Output:\n{\n  \"selectedLanguage\": \"English\",\n  \"nextMessage\": \"Great, you've selected English. Would you prefer to receive responses as Text messages or Voice notes? (Please type 'Text' or 'Voice')\"\n}\n\nExample Task: User message is \"कन्नड़\"\nExample Output:\n{\n  \"selectedLanguage\": \"Kannada\",\n  \"nextMessage\": \"ಸರಿ, ನೀವು ಕನ್ನಡವನ್ನು ಆಯ್ಕೆ ಮಾಡಿದ್ದೀರಿ. ನೀವು ಪ್ರತಿಕ್ರಿಯೆಗಳನ್ನು ಪಠ್ಯ ಸಂದೇಶಗಳಾಗಿ (Text) ಅಥವಾ ಧ್ವನಿ ಟಿಪ್ಪಣಿಗಳಾಗಿ (Voice) ಸ್ವೀಕರಿಸಲು ಬಯಸುತ್ತೀರಾ? (ದಯವಿಟ್ಟು 'Text' ಅಥವಾ 'Voice' ಎಂದು ಟೈಪ್ ಮಾಡಿ)\"\n}\n\nIf the user's choice is unclear or invalid, set selectedLanguage to \"Unknown\" and ask them to choose a language again from the list.\nCRITICAL: Output ONLY the raw JSON object. Do NOT include any other text, greetings, explanations, or markdown formatting like ```json.\n\"Your entire response must be ONLY the valid JSON structure specified.\"\n\n\"Example of BAD output: Here is the JSON: {\\\"selectedLanguage\\\": ...}\"\n\n\"Example of GOOD output: {\\\"selectedLanguage\\\": \\\"English\\\", ...}\""
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        400,
+        680
+      ],
+      "id": "294e3c21-16b6-4179-a62b-1e99e8b944f5",
+      "name": "AI Agent - Process Lang & Ask Interest"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        420,
+        840
+      ],
+      "id": "f39f1537-8b35-449d-bda0-83798780e654",
+      "name": "Google Gemini Chat Model12",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "HzUbMxuj31f3gNlB",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "44ba2efd-d473-454f-b35d-63cde887e7a1",
+              "leftValue": "={{ $json.selectedLanguage }}",
+              "rightValue": "Unknown",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        880,
+        680
+      ],
+      "id": "452f4f34-3cb8-46b9-8e5d-f380668756fe",
+      "name": "If Language Unknown"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "af2493c8-095e-42d5-bb59-9f16a34659d9",
+              "name": "newState",
+              "value": "WAITING_FOR_LANGUAGE",
+              "type": "string"
+            },
+            {
+              "id": "56c25cd7-372a-4249-ac8b-56496721728a",
+              "name": "aiResponse",
+              "value": "={{ $json.confirmationMessage }}",
+              "type": "string"
+            },
+            {
+              "id": "b15f6f3d-9eed-48aa-8fd3-e2b0c1f2fa7b",
+              "name": "newHistory",
+              "value": "={{\n  (() => {\n    // Get history loaded from DB via 'Prepare State & Defaults'\n    const loadedHistory = $('Prepare State & Defaults').item.json.conversationHistory;\n    // Get user message from the same source\n    const userMsg = $('Prepare State & Defaults').item.json.userMessage;\n    // Get the AI response passed INTO this Set node from the preceding node (e.g., Parse AI node or AI Agent)\n    // *** IMPORTANT: Check the input data of THIS Set node to confirm the field name for the AI response ***\n    // It might be $json.aiResponse, $json.output, $json.nextMessage, $json.confirmationMessage, etc.\n    // Let's assume it's usually stored in 'aiResponse' field you defined in these Set nodes\n    const aiResp = $json.aiResponse;\n\n    // Ensure history is an array\n    const history = Array.isArray(loadedHistory) ? [...loadedHistory] : [];\n\n    // Add current turn's user message (if valid)\n    if (userMsg && typeof userMsg === 'string' && userMsg.trim() !== '') {\n       history.push({ type: 'human', data: { content: userMsg } });\n    }\n    // Add current turn's AI response (if valid)\n    if (aiResp && typeof aiResp === 'string' && aiResp.trim() !== '') {\n       history.push({ type: 'ai', data: { content: aiResp } });\n    }\n\n    // Optional: Limit history size (e.g., keep last 10 pairs = 20 entries)\n    const maxHistory = 20;\n    return history.slice(-maxHistory);\n  })()\n}}",
+              "type": "array"
+            },
+            {
+              "id": "f7bb8f81-e322-4609-b78c-f9d42cd5424a",
+              "name": "chatId",
+              "value": "={{ $('Prepare State & Defaults').item.json.chatId }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1280,
+        660
+      ],
+      "id": "8bbbb586-b2a4-4ca6-b738-dbd48ff91059",
+      "name": "Set State: WAITING_FOR_LANGUAGE (Retry)"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1K-M-muRoX5lI6qLMt1qxG4bo8ZqiP55p_Q3-rxrOLzo",
+          "mode": "list",
+          "cachedResultName": "optimoDATA",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1K-M-muRoX5lI6qLMt1qxG4bo8ZqiP55p_Q3-rxrOLzo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1K-M-muRoX5lI6qLMt1qxG4bo8ZqiP55p_Q3-rxrOLzo/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Timestamp": "{{ $now }}",
+            "SelectedLanguage": "={{ $('Prepare State & Defaults').item.json.selectedLanguage }}",
+            "ChatID": "={{ $('Prepare State & Defaults').item.json.chatId }}"
+          },
+          "matchingColumns": [
+            "ChatID"
+          ],
+          "schema": [
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "PhoneNo",
+              "displayName": "PhoneNo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ChatID",
+              "displayName": "ChatID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Requested Follow-Up",
+              "displayName": "Requested Follow-Up",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "SelectedLanguage",
+              "displayName": "SelectedLanguage",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LastUpdated",
+              "displayName": "LastUpdated",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1080,
+        840
+      ],
+      "id": "437a756c-6c6b-4785-939a-399fa29cfb53",
+      "name": "Save Language to Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tw0mIXrZ59qfgZsM",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Conversation History:\\n{{ JSON.stringify($('Prepare State & Defaults').item.json.conversationHistory) }}\\n\\nUser message: {{ $('Prepare State & Defaults').item.json.userMessage }}\\nSelected Language: {{ $('Prepare State & Defaults').item.json.selectedLanguage }}\n\n",
+        "options": {
+          "systemMessage": "You are an assistant for Optimo Capital. The user was just asked if they are interested in a property loan in their chosen language: {{ $('Prepare State & Defaults').item.json.selectedLanguage }}.\nAnalyze the latest \"User message\" to determine if they responded positively (\"Yes\", \"हाँ\", \"ಹೌದು\", etc.) or negatively (\"No\", \"नहीं\", \"ಇಲ್ಲ\", etc.). In addition, check if the user has provided any details regarding their estimated property home value, current outstanding mortgage balance, or credit score.\n\nOutput ONLY a JSON object with the following structure:\n{\n  \"interest\": \"Yes / No / Unknown\",\n  \"homeValue\": <Number or null>,           // If provided by the user; otherwise null\n  \"mortgageBalance\": <Number or null>,       // If provided by the user; otherwise null\n  \"creditScore\": <Number or null>,           // If provided by the user; otherwise null\n  \"potentialLoanAmount\": <Number or null>,   // Calculate if homeValue and mortgageBalance are provided, using: (homeValue - mortgageBalance) * 0.8\n  \"nextMessage\": \"<Appropriate next message in the selected language>\"\n}\n\n- If \"interest\" is \"Yes\":\n  - And none of the additional qualification details are provided, the \"nextMessage\" should ask for the estimated property home value.\n  - And the property value is provided but the mortgage balance is missing, the \"nextMessage\" should ask for the mortgage balance.\n  - And both property value and mortgage balance are provided but the credit score is missing, the \"nextMessage\" should ask for the credit score.\n  - And all details are provided, calculate the potential loan amount and ask if they would like to connect with a loan advisor.\n- If \"interest\" is \"No\": The \"nextMessage\" should ask if they'd like to be contacted later (e.g., \"Okay, no problem. Would you like us to contact you at a later date? Please provide a preferred date and time if yes.\").\n- If the response is unclear: Set \"interest\" to \"Unknown\" and the \"nextMessage\" should ask the interest question again clearly.\n\nEnsure that the \"nextMessage\" is in the '{{ $('Prepare State & Defaults').item.json.selectedLanguage }}' language.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        400,
+        1580
+      ],
+      "id": "ebd1d527-b845-4a90-aa8c-53b8ffa2725e",
+      "name": "AI Agent - Process Interest & Ask Next"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        420,
+        1740
+      ],
+      "id": "8c0eeaf1-e12a-4402-8878-1d42027a6838",
+      "name": "Google Gemini Chat Model13",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "HzUbMxuj31f3gNlB",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "let outputData = {};\nlet aiOutput = ''; // Initialize aiOutput\n\ntry {\n  // 1. Check if input exists\n  if (!$json || typeof $json.output === 'undefined') {\n    throw new Error(\"Input data ($json or $json.output) is missing.\");\n  }\n  aiOutput = $json.output; // Get the raw output\n\n  // 2. Clean the output string\n  const cleanedOutput = aiOutput.replace(/```json\\n?|\\n?```/g, '').trim();\n\n  // 3. Check if cleanedOutput is empty\n  if (!cleanedOutput) {\n      throw new Error(\"Cleaned AI output is empty after removing markdown/trimming.\");\n  }\n\n  // 4. Parse the JSON\n  const parsed = JSON.parse(cleanedOutput);\n\n  // 5. Extract interest-specific data with defaults\n  // Assigning directly to outputData.json for clarity\n  outputData.interest = parsed.interest || 'Unknown';\n  outputData.nextMessage = parsed.nextMessage || 'Sorry, I didn\\'t quite catch that. Are you interested in a property loan? (Yes/No)';\n  // Include other potential fields if the AI might return them (like homeValue etc.)\n  outputData.homeValue = parsed.homeValue || null;\n  outputData.mortgageBalance = parsed.mortgageBalance || null;\n  outputData.creditScore = parsed.creditScore || null;\n  outputData.potentialLoanAmount = parsed.potentialLoanAmount || null;\n\n\n} catch (error) {\n  // 6. Handle errors\n  console.error(\"Error parsing AI Interest Response:\", error); // Specific node name\n  if (aiOutput) {\n      console.error(\"Raw AI output was:\", aiOutput);\n  } else {\n       console.error(\"Raw AI input ($json.output) was likely missing or undefined.\");\n  }\n\n  // Default error values for interest\n  outputData.interest = 'Unknown';\n  outputData.nextMessage = 'Sorry, there was an technical issue understanding your interest. Could you please reply Yes or No?';\n  // Default other fields to null\n  outputData.homeValue = null;\n  outputData.mortgageBalance = null;\n  outputData.creditScore = null;\n  outputData.potentialLoanAmount = null;\n\n}\n\n// 7. --- IMPORTANT: Add back passthrough data needed by subsequent nodes ---\n// Adjust the source node name ('Prepare State & Defaults') if it changed.\ntry {\n    outputData.chatId = $('Prepare State & Defaults').item.json.chatId;\n    outputData.selectedLanguage = $('Prepare State & Defaults').item.json.selectedLanguage;\n    outputData.responsePreference = $('Prepare State & Defaults').item.json.responsePreference; // Pass preference along\n    // History is handled by DB now\n    // outputData.conversationHistory = $('Prepare State & Defaults').item.json.conversationHistory;\n    outputData.userMessage = $('Prepare State & Defaults').item.json.userMessage;\n} catch(passthroughError) {\n    console.warn(\"Could not pass through all expected data in Parse AI Interest Response:\", passthroughError);\n    // Assign defaults or nulls if needed for downstream nodes\n    outputData.chatId = outputData.chatId || null;\n    outputData.selectedLanguage = outputData.selectedLanguage || 'English';\n    outputData.responsePreference = outputData.responsePreference || 'Text';\n    outputData.userMessage = outputData.userMessage || null;\n}\n// --- End Passthrough Data ---\n\n// 8. Return the standard n8n item structure\n// Directly returning the outputData object wrapped in json\nreturn { json: outputData };"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        860,
+        1580
+      ],
+      "id": "2d88a949-03a3-4029-bf53-f331df9acc85",
+      "name": "Parse AI Interest Response"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "341ca1ca-7289-4b0d-89ed-19c4517a089a",
+              "name": "newState",
+              "value": "WAITING_FOR_INTEREST",
+              "type": "string"
+            },
+            {
+              "id": "39efd77d-9b97-4a69-94c6-84a93d4ae545",
+              "name": "aiResponse",
+              "value": "={{ $json.nextMessage }}",
+              "type": "string"
+            },
+            {
+              "id": "2a871c48-124e-4d99-a377-14595160115c",
+              "name": "=chatId",
+              "value": "={{ $('Prepare State & Defaults').item.json.chatId }}",
+              "type": "string"
+            },
+            {
+              "id": "3961c1b0-a173-4b2c-b68e-4118f85f96f1",
+              "name": "newHistory",
+              "value": "={{\n  (() => {\n    // Get history loaded from DB via 'Prepare State & Defaults'\n    const loadedHistory = $('Prepare State & Defaults').item.json.conversationHistory;\n    // Get user message from the same source\n    const userMsg = $('Prepare State & Defaults').item.json.userMessage;\n    // Get the AI response passed INTO this Set node from the preceding node (e.g., Parse AI node or AI Agent)\n    // *** IMPORTANT: Check the input data of THIS Set node to confirm the field name for the AI response ***\n    // It might be $json.aiResponse, $json.output, $json.nextMessage, $json.confirmationMessage, etc.\n    // Let's assume it's usually stored in 'aiResponse' field you defined in these Set nodes\n    const aiResp = $json.aiResponse;\n\n    // Ensure history is an array\n    const history = Array.isArray(loadedHistory) ? [...loadedHistory] : [];\n\n    // Add current turn's user message (if valid)\n    if (userMsg && typeof userMsg === 'string' && userMsg.trim() !== '') {\n       history.push({ type: 'human', data: { content: userMsg } });\n    }\n    // Add current turn's AI response (if valid)\n    if (aiResp && typeof aiResp === 'string' && aiResp.trim() !== '') {\n       history.push({ type: 'ai', data: { content: aiResp } });\n    }\n\n    // Optional: Limit history size (e.g., keep last 10 pairs = 20 entries)\n    const maxHistory = 20;\n    return history.slice(-maxHistory);\n  })()\n}}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1280,
+        1720
+      ],
+      "id": "24c54bc1-3f36-4ccc-bceb-8e567b7c6f8a",
+      "name": "Set State: WAITING_FOR_INTEREST (Retry) (NEW Node)"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "17a06f6d-67d4-41e6-8aa9-9495bf7583b4",
+              "name": "newState",
+              "value": "WAITING_FOR_QUALIFICATIONS",
+              "type": "string"
+            },
+            {
+              "id": "834beb52-330b-4613-89bc-df1e3576db0a",
+              "name": "aiResponse",
+              "value": "={{ $json.nextMessage }}",
+              "type": "string"
+            },
+            {
+              "id": "67aaed8d-9c8f-47d7-8610-890af99ba439",
+              "name": "chatId",
+              "value": "={{ $('Prepare State & Defaults').item.json.chatId }}",
+              "type": "string"
+            },
+            {
+              "id": "17b6f191-121b-464c-a25d-580a935a2c20",
+              "name": "newHistory",
+              "value": "={{\n  (() => {\n    // Get history loaded from DB via 'Prepare State & Defaults'\n    const loadedHistory = $('Prepare State & Defaults').item.json.conversationHistory;\n    // Get user message from the same source\n    const userMsg = $('Prepare State & Defaults').item.json.userMessage;\n    // Get the AI response passed INTO this Set node from the preceding node (e.g., Parse AI node or AI Agent)\n    // *** IMPORTANT: Check the input data of THIS Set node to confirm the field name for the AI response ***\n    // It might be $json.aiResponse, $json.output, $json.nextMessage, $json.confirmationMessage, etc.\n    // Let's assume it's usually stored in 'aiResponse' field you defined in these Set nodes\n    const aiResp = $json.aiResponse;\n\n    // Ensure history is an array\n    const history = Array.isArray(loadedHistory) ? [...loadedHistory] : [];\n\n    // Add current turn's user message (if valid)\n    if (userMsg && typeof userMsg === 'string' && userMsg.trim() !== '') {\n       history.push({ type: 'human', data: { content: userMsg } });\n    }\n    // Add current turn's AI response (if valid)\n    if (aiResp && typeof aiResp === 'string' && aiResp.trim() !== '') {\n       history.push({ type: 'ai', data: { content: aiResp } });\n    }\n\n    // Optional: Limit history size (e.g., keep last 10 pairs = 20 entries)\n    const maxHistory = 20;\n    return history.slice(-maxHistory);\n  })()\n}}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1280,
+        1400
+      ],
+      "id": "d5a2ae00-b2c5-4617-bea0-2f485cf874ea",
+      "name": "Set State: WAITING_FOR_QUALIFICATIONS"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b3f5c241-d6c5-4067-9c17-a669720841af",
+              "name": "newState",
+              "value": "WAITING_FOR_FOLLOWUP_TIME",
+              "type": "string"
+            },
+            {
+              "id": "7eeecdcf-d519-4fcd-90cd-35edf521fd49",
+              "name": "aiResponse",
+              "value": "={{ $json.nextMessage }}",
+              "type": "string"
+            },
+            {
+              "id": "2f5d9a88-24c1-4df1-92d4-36a7fe60d5b8",
+              "name": "chatId",
+              "value": "={{ $('Prepare State & Defaults').item.json.chatId }}",
+              "type": "string"
+            },
+            {
+              "id": "081161d8-0f24-47a5-978a-49721028046a",
+              "name": "newHistory",
+              "value": "={{\n  (() => {\n    // Get history loaded from DB via 'Prepare State & Defaults'\n    const loadedHistory = $('Prepare State & Defaults').item.json.conversationHistory;\n    // Get user message from the same source\n    const userMsg = $('Prepare State & Defaults').item.json.userMessage;\n    // Get the AI response passed INTO this Set node from the preceding node (e.g., Parse AI node or AI Agent)\n    // *** IMPORTANT: Check the input data of THIS Set node to confirm the field name for the AI response ***\n    // It might be $json.aiResponse, $json.output, $json.nextMessage, $json.confirmationMessage, etc.\n    // Let's assume it's usually stored in 'aiResponse' field you defined in these Set nodes\n    const aiResp = $json.aiResponse;\n\n    // Ensure history is an array\n    const history = Array.isArray(loadedHistory) ? [...loadedHistory] : [];\n\n    // Add current turn's user message (if valid)\n    if (userMsg && typeof userMsg === 'string' && userMsg.trim() !== '') {\n       history.push({ type: 'human', data: { content: userMsg } });\n    }\n    // Add current turn's AI response (if valid)\n    if (aiResp && typeof aiResp === 'string' && aiResp.trim() !== '') {\n       history.push({ type: 'ai', data: { content: aiResp } });\n    }\n\n    // Optional: Limit history size (e.g., keep last 10 pairs = 20 entries)\n    const maxHistory = 20;\n    return history.slice(-maxHistory);\n  })()\n}}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1280,
+        1560
+      ],
+      "id": "f6a601de-1e93-45b1-a69f-2a03e4fbebe9",
+      "name": "Set State: WAITING_FOR_FOLLOWUP_TIME"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Conversation History:\\n{{ JSON.stringify($('Prepare State & Defaults').item.json.conversationHistory) }}\\n\\nUser message: {{ $('Prepare State & Defaults').item.json.userMessage }}\\nSelected Language: {{ $('Prepare State & Defaults').item.json.selectedLanguage }}\n\n",
+        "options": {
+          "systemMessage": "\nYou are an assistant for Optimo Capital helping a user interested in a property loan. Their language is {{ $('Prepare State & Defaults').item.json.selectedLanguage }}.\nCarefully review the Conversation History.\n\n*   If the history shows you just asked for the property value, interpret the current \"User message\" as the **property value**. Acknowledge it, extract the number, and then ask for the \"current outstanding mortgage balance (if any, otherwise 0)\". Output status \"NEEDS_MORTGAGE\".\n*   If the history shows you just asked for the mortgage balance, interpret the current \"User message\" as the **mortgage balance**. Acknowledge it, extract the number. Retrieve the property value mentioned earlier in the history. Calculate Potential Loan = (Property Value - Mortgage Balance) * 0.8. Present the result clearly. Ask if they want to speak to an advisor. Output status \"CALCULATION_COMPLETE\".\n*   If the user message does not seem to contain the expected information (value or balance), output status \"INFO_MISSING\" and repeat the relevant question clearly.\n\nOutput ONLY a JSON object:\n{\n  \"status\": \"NEEDS_MORTGAGE / CALCULATION_COMPLETE / INFO_MISSING\",\n  \"responseMessage\": \"<Your response/next question to the user in their language>\",\n  \"calculatedLoanAmount\": <Number or null> // Only if calculation is complete\n}\nIf the user provided the property value:\n1. Acknowledge it.\n2. Ask for the next piece of information: \"current outstanding mortgage balance (if any, otherwise 0)\".\n3. Keep track of the provided information (implicitly via history or explicitly in your reasoning).\n\nIf the user provided the mortgage balance:\n1. Acknowledge it.\n2. Calculate a potential loan amount using the formula: Potential Loan = (Property Value - Mortgage Balance) * 0.8\n3. Present the result clearly to the user in their language.\n4. Ask if they would like to speak to a loan advisor.\n\nOutput ONLY a JSON object:\n{\n  \"status\": \"NEEDS_MORTGAGE / CALCULATION_COMPLETE / INFO_MISSING\",\n  \"responseMessage\": \"<Your response/next question to the user in their language>\",\n  \"calculatedLoanAmount\": <Number or null> // Only if calculation is complete\n}\n\nExample (User provides value '500000'):\n{\n  \"status\": \"NEEDS_MORTGAGE\",\n  \"responseMessage\": \"Thank you for providing the property value. Now, could you please tell me your current outstanding mortgage balance? (Enter 0 if none)\",\n  \"calculatedLoanAmount\": null\n}\n\nExample (User provides mortgage '100000' after previously giving value '500000'):\n{\n  \"status\": \"CALCULATION_COMPLETE\",\n  \"responseMessage\": \"Based on a property value of 500,000 and mortgage of 100,000, you might be eligible for a loan amount of approximately 320,000. I would record this for our agents to follow you up on this,\n  \"calculatedLoanAmount\": 320000\n}\nExample (User provides value '500000' after being asked):\n{\n  \"status\": \"NEEDS_MORTGAGE\",\n  \"responseMessage\": \"Thank you for providing the property value of 500,000. Now, could you please tell me your current outstanding mortgage balance? (Enter 0 if none)\",\n  \"calculatedLoanAmount\": null\n}\n\nExample (User provides mortgage '12' after previously giving value '500000' and being asked for mortgage):\n{\n  \"status\": \"CALCULATION_COMPLETE\",\n  \"responseMessage\": \"Got it. Based on a property value of 500,000 and mortgage of 12, you might be eligible for a loan amount of approximately 399,990. Would you like to connect with a loan advisor to discuss further? (Yes/No)\",\n  \"calculatedLoanAmount\": 399990.4\n}\n\nCRITICAL: Output ONLY the raw JSON. Do not include markdown.\nIf the user's message doesn't contain the expected info, set status to \"INFO_MISSING\" and ask for it again."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        400,
+        2060
+      ],
+      "id": "9e8add88-84eb-4520-aa8a-3816dbe55ed2",
+      "name": "AI Agent - Process Qualifications & Calculate"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        420,
+        2220
+      ],
+      "id": "63f950be-24ac-48c1-98da-4726b59cc7c7",
+      "name": "Google Gemini Chat Model14",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "HzUbMxuj31f3gNlB",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "let outputData = {};\nlet aiOutput = ''; // Initialize aiOutput\n\ntry {\n  // 1. Check if input exists\n  if (!$json || typeof $json.output === 'undefined') {\n    throw new Error(\"Input data ($json or $json.output) is missing.\");\n  }\n  aiOutput = $json.output; // Get the raw output\n\n  // 2. Clean the output string\n  const cleanedOutput = aiOutput.replace(/```json\\n?|\\n?```/g, '').trim();\n\n  // 3. Check if cleanedOutput is empty\n  if (!cleanedOutput) {\n      throw new Error(\"Cleaned AI output is empty after removing markdown/trimming.\");\n  }\n\n  // 4. Parse the JSON\n  const parsed = JSON.parse(cleanedOutput);\n\n  // 5. Extract qualification-specific data with defaults\n  outputData.status = parsed.status || 'INFO_MISSING';\n  outputData.responseMessage = parsed.responseMessage || 'Sorry, I encountered an issue processing that information. Could you please provide it again?';\n  outputData.calculatedLoanAmount = parsed.calculatedLoanAmount || null; // Keep as null if missing\n\n} catch (error) {\n  // 6. Handle errors\n  console.error(\"Error parsing AI Qualification Response:\", error); // Specific node name\n  if (aiOutput) {\n      console.error(\"Raw AI output was:\", aiOutput);\n  } else {\n       console.error(\"Raw AI input ($json.output) was likely missing or undefined.\");\n  }\n\n  // Default error values for qualification response\n  outputData.status = 'INFO_MISSING';\n  outputData.responseMessage = 'Sorry, there was a technical issue. Could you please provide the qualification details again?';\n  outputData.calculatedLoanAmount = null;\n\n}\n\n// 7. --- Add passthrough data needed by subsequent nodes ---\n// Adjust source node name ('Prepare State & Defaults') if needed.\ntry {\n    outputData.chatId = $('Prepare State & Defaults').item.json.chatId;\n    outputData.selectedLanguage = $('Prepare State & Defaults').item.json.selectedLanguage;\n    outputData.responsePreference = $('Prepare State & Defaults').item.json.responsePreference;\n    outputData.userMessage = $('Prepare State & Defaults').item.json.userMessage;\n} catch(passthroughError) {\n    console.warn(\"Could not pass through all expected data in Parse AI Qualification Response:\", passthroughError);\n    // Assign defaults or nulls if needed for downstream nodes\n    outputData.chatId = outputData.chatId || null;\n    outputData.selectedLanguage = outputData.selectedLanguage || 'English';\n    outputData.responsePreference = outputData.responsePreference || 'Text';\n    outputData.userMessage = outputData.userMessage || null;\n}\n// --- End Passthrough Data ---\n\n// 8. Return the standard n8n item structure\nreturn { json: outputData };"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        2060
+      ],
+      "id": "a3432ce5-8158-46b9-87c1-b822f5b8abb8",
+      "name": "Parse AI Qualification Response"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.status }}",
+                    "rightValue": "NEEDS_MORTGAGE",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "9130bd76-d308-4177-9d30-c78f5d4f6db7"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "e76d90a4-7078-4cc2-adfe-59c7684625bd",
+                    "leftValue": "={{ $json.status }}",
+                    "rightValue": "CALCULATION_COMPLETE",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "8dc35884-77fb-412d-8aee-94acdd914f1f",
+                    "leftValue": "={{ $json.status }}",
+                    "rightValue": "INFO_MISSING",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1080,
+        2060
+      ],
+      "id": "a21ab81b-38c4-41bb-855c-ba7b472482bc",
+      "name": "Route Qualification Status"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "504e14b8-06e8-49f5-994b-477ca0d0c077",
+              "name": "newState",
+              "value": "WAITING_FOR_QUALIFICATIONS",
+              "type": "string"
+            },
+            {
+              "id": "ce55b72b-3bff-4bb6-b956-f5eb5702edf8",
+              "name": "aiResponse",
+              "value": "={{ $('Parse AI Qualification Response').item.json.responseMessage }}",
+              "type": "string"
+            },
+            {
+              "id": "21b09479-7f16-42e3-8fb8-622a23cd1e82",
+              "name": "newHistory",
+              "value": "={{\n  (() => {\n    // Get history loaded from DB via 'Prepare State & Defaults'\n    const loadedHistory = $('Prepare State & Defaults').item.json.conversationHistory;\n    // Get user message from the same source\n    const userMsg = $('Prepare State & Defaults').item.json.userMessage;\n    // Get the AI response passed INTO this Set node from the preceding node (e.g., Parse AI node or AI Agent)\n    // *** IMPORTANT: Check the input data of THIS Set node to confirm the field name for the AI response ***\n    // It might be $json.aiResponse, $json.output, $json.nextMessage, $json.confirmationMessage, etc.\n    // Let's assume it's usually stored in 'aiResponse' field you defined in these Set nodes\n    const aiResp = $json.aiResponse;\n\n    // Ensure history is an array\n    const history = Array.isArray(loadedHistory) ? [...loadedHistory] : [];\n\n    // Add current turn's user message (if valid)\n    if (userMsg && typeof userMsg === 'string' && userMsg.trim() !== '') {\n       history.push({ type: 'human', data: { content: userMsg } });\n    }\n    // Add current turn's AI response (if valid)\n    if (aiResp && typeof aiResp === 'string' && aiResp.trim() !== '') {\n       history.push({ type: 'ai', data: { content: aiResp } });\n    }\n\n    // Optional: Limit history size (e.g., keep last 10 pairs = 20 entries)\n    const maxHistory = 20;\n    return history.slice(-maxHistory);\n  })()\n}}",
+              "type": "array"
+            },
+            {
+              "id": "159e36d4-4cc3-4194-adbd-c68f6ad312ec",
+              "name": "=chatId",
+              "value": "={{ $('Prepare State & Defaults').item.json.chatId }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1280,
+        1880
+      ],
+      "id": "00e839d4-22dd-4928-a29e-776775ffc52a",
+      "name": "Set State: Ask Mortgage"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "66437a8d-a546-4194-a5d0-6db600970412",
+              "name": "aiResponse",
+              "value": "={{ $('Parse AI Qualification Response').item.json.responseMessage }}",
+              "type": "string"
+            },
+            {
+              "id": "9b9f251b-6969-41a7-a4f5-f360ab2a6bf1",
+              "name": "newHistory",
+              "value": "={{\n  (() => {\n    // Get history loaded from DB via 'Prepare State & Defaults'\n    const loadedHistory = $('Prepare State & Defaults').item.json.conversationHistory;\n    // Get user message from the same source\n    const userMsg = $('Prepare State & Defaults').item.json.userMessage;\n    // Get the AI response passed INTO this Set node from the preceding node (e.g., Parse AI node or AI Agent)\n    // *** IMPORTANT: Check the input data of THIS Set node to confirm the field name for the AI response ***\n    // It might be $json.aiResponse, $json.output, $json.nextMessage, $json.confirmationMessage, etc.\n    // Let's assume it's usually stored in 'aiResponse' field you defined in these Set nodes\n    const aiResp = $json.aiResponse;\n\n    // Ensure history is an array\n    const history = Array.isArray(loadedHistory) ? [...loadedHistory] : [];\n\n    // Add current turn's user message (if valid)\n    if (userMsg && typeof userMsg === 'string' && userMsg.trim() !== '') {\n       history.push({ type: 'human', data: { content: userMsg } });\n    }\n    // Add current turn's AI response (if valid)\n    if (aiResp && typeof aiResp === 'string' && aiResp.trim() !== '') {\n       history.push({ type: 'ai', data: { content: aiResp } });\n    }\n\n    // Optional: Limit history size (e.g., keep last 10 pairs = 20 entries)\n    const maxHistory = 20;\n    return history.slice(-maxHistory);\n  })()\n}}",
+              "type": "array"
+            },
+            {
+              "id": "328fe5cc-6990-45fa-b545-598aed3d5c23",
+              "name": "chatId",
+              "value": "={{ $('Prepare State & Defaults').item.json.chatId }}",
+              "type": "string"
+            },
+            {
+              "id": "68dce52f-fb9a-4937-a4df-e96639533db2",
+              "name": "newState",
+              "value": "WAITING_FOR_FOLLOWUP_TIME",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1280,
+        2040
+      ],
+      "id": "0d784bc9-ded8-4bf1-b442-e09a09a181aa",
+      "name": "Set State: Ask Advisor"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "618374c2-a432-4f70-936f-c8ac079b79bc",
+              "name": "newState",
+              "value": "WAITING_FOR_QUALIFICATIONS",
+              "type": "string"
+            },
+            {
+              "id": "7653420d-7367-4464-923e-ab6f8557d448",
+              "name": "aiResponse",
+              "value": "={{ $('Parse AI Qualification Response').item.json.responseMessage }}",
+              "type": "string"
+            },
+            {
+              "id": "9883ca3d-a503-4a57-b28f-2cc71e4d41db",
+              "name": "newHistory",
+              "value": "={{\n  (() => {\n    // Get history loaded from DB via 'Prepare State & Defaults'\n    const loadedHistory = $('Prepare State & Defaults').item.json.conversationHistory;\n    // Get user message from the same source\n    const userMsg = $('Prepare State & Defaults').item.json.userMessage;\n    // Get the AI response passed INTO this Set node from the preceding node (e.g., Parse AI node or AI Agent)\n    // *** IMPORTANT: Check the input data of THIS Set node to confirm the field name for the AI response ***\n    // It might be $json.aiResponse, $json.output, $json.nextMessage, $json.confirmationMessage, etc.\n    // Let's assume it's usually stored in 'aiResponse' field you defined in these Set nodes\n    const aiResp = $json.aiResponse;\n\n    // Ensure history is an array\n    const history = Array.isArray(loadedHistory) ? [...loadedHistory] : [];\n\n    // Add current turn's user message (if valid)\n    if (userMsg && typeof userMsg === 'string' && userMsg.trim() !== '') {\n       history.push({ type: 'human', data: { content: userMsg } });\n    }\n    // Add current turn's AI response (if valid)\n    if (aiResp && typeof aiResp === 'string' && aiResp.trim() !== '') {\n       history.push({ type: 'ai', data: { content: aiResp } });\n    }\n\n    // Optional: Limit history size (e.g., keep last 10 pairs = 20 entries)\n    const maxHistory = 20;\n    return history.slice(-maxHistory);\n  })()\n}}",
+              "type": "array"
+            },
+            {
+              "id": "5a45a3e5-10cd-4d31-8dc4-5b3a534ba492",
+              "name": "chatId",
+              "value": "={{ $('Prepare State & Defaults').item.json.chatId }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1280,
+        2200
+      ],
+      "id": "5ab3d61f-15bb-4a25-b998-684ee2187c91",
+      "name": "Set State: Re-ask Qualification"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Conversation History:\\n{{ JSON.stringify($('Prepare State & Defaults').item.json.conversationHistory) }}\\n\\nUser message: {{ $('Prepare State & Defaults').item.json.userMessage }}\\nSelected Language: {{ $('Prepare State & Defaults').item.json.selectedLanguage }}\n",
+        "options": {
+          "systemMessage": "You are an assistant for Optimo Capital. The user previously declined immediate loan interest but was asked for a preferred follow-up time. Their language is {{ $('Prepare State & Defaults').item.json.selectedLanguage }}.\nAnalyze the \"User message\" to extract the requested follow-up date and time information.\nOutput ONLY a JSON object:\n{\n  \"followUpDetails\": \"<Extracted date/time info as text, e.g., 'Tomorrow afternoon', 'Next Tuesday at 3 PM', 'Not specified'>\",\n  \"confirmationMessage\": \"<A message confirming the follow-up request or asking for clarification in their language>\"\n}\n\nExample (User says 'Tomorrow around 2pm'):\n{\n  \"followUpDetails\": \"Tomorrow around 2pm\",\n  \"confirmationMessage\": \"Got it. We'll note down to follow up with you tomorrow around 2 PM. Thank you for contacting Optimo Capital!\"\n}\n\nExample (User says 'No thanks'):\n{\n  \"followUpDetails\": \"Declined\",\n  \"confirmationMessage\": \"Okay, understood. Thank you for contacting Optimo Capital. Have a great day!\"\n}\n\nIf the time is unclear, ask for clarification."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        400,
+        2400
+      ],
+      "id": "e9802295-5b1b-4140-8c86-e195c5ad3438",
+      "name": "AI Agent - Process Follow-up Time"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        420,
+        2560
+      ],
+      "id": "88e594b4-56e2-4ade-957f-61bce10f1205",
+      "name": "Google Gemini Chat Model15",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "HzUbMxuj31f3gNlB",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "let outputData = {};\nlet aiOutput = ''; // Initialize aiOutput\n\ntry {\n  // 1. Check if input exists\n  if (!$json || typeof $json.output === 'undefined') {\n    throw new Error(\"Input data ($json or $json.output) is missing.\");\n  }\n  aiOutput = $json.output; // Get the raw output\n\n  // 2. Clean the output string\n  const cleanedOutput = aiOutput.replace(/```json\\n?|\\n?```/g, '').trim();\n\n  // 3. Check if cleanedOutput is empty\n  if (!cleanedOutput) {\n      throw new Error(\"Cleaned AI output is empty after removing markdown/trimming.\");\n  }\n\n  // 4. Parse the JSON\n  const parsed = JSON.parse(cleanedOutput);\n\n  // 5. Extract follow-up specific data with defaults\n  outputData.followUpDetails = parsed.followUpDetails || 'Not specified';\n  outputData.confirmationMessage = parsed.confirmationMessage || 'Got it. When would you like us to follow up?';\n\n} catch (error) {\n  // 6. Handle errors\n  console.error(\"Error parsing AI Follow-up Response:\", error); // Specific node name\n  if (aiOutput) {\n      console.error(\"Raw AI output was:\", aiOutput);\n  } else {\n       console.error(\"Raw AI input ($json.output) was likely missing or undefined.\");\n  }\n\n  // Default error values for follow-up\n  outputData.followUpDetails = 'Error Processing Response';\n  outputData.confirmationMessage = 'Sorry, there was an technical issue understanding your response. Could you please state your preferred follow-up time again?';\n}\n\n// 7. --- Add back passthrough data needed by subsequent nodes ---\n// Adjust the source node name ('Prepare State & Defaults') if it changed.\ntry {\n    outputData.chatId = $('Prepare State & Defaults').item.json.chatId;\n    outputData.selectedLanguage = $('Prepare State & Defaults').item.json.selectedLanguage;\n    outputData.responsePreference = $('Prepare State & Defaults').item.json.responsePreference;\n    outputData.userMessage = $('Prepare State & Defaults').item.json.userMessage;\n} catch(passthroughError) {\n    console.warn(\"Could not pass through all expected data in Parse Follow-up Response:\", passthroughError);\n    // Assign defaults or nulls if needed\n    outputData.chatId = outputData.chatId || null;\n    outputData.selectedLanguage = outputData.selectedLanguage || 'English';\n    outputData.responsePreference = outputData.responsePreference || 'Text';\n    outputData.userMessage = outputData.userMessage || null;\n}\n// --- End Passthrough Data ---\n\n// 8. Return the standard n8n item structure\nreturn { json: outputData };"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        2400
+      ],
+      "id": "a5282144-1bb1-4720-ba49-27bc2b13196e",
+      "name": "Parse Follow-up Response"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1K-M-muRoX5lI6qLMt1qxG4bo8ZqiP55p_Q3-rxrOLzo",
+          "mode": "list",
+          "cachedResultName": "optimoDATA",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1K-M-muRoX5lI6qLMt1qxG4bo8ZqiP55p_Q3-rxrOLzo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1K-M-muRoX5lI6qLMt1qxG4bo8ZqiP55p_Q3-rxrOLzo/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Timestamp": "{{ $now }}",
+            "Requested Follow-Up": "{{ $('Parse Follow-up Response').item.json.followUpDetails }}",
+            "ChatID": "{{ $('Prepare State & Defaults').item.json.chatId }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PhoneNo",
+              "displayName": "PhoneNo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ChatID",
+              "displayName": "ChatID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Requested Follow-Up",
+              "displayName": "Requested Follow-Up",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "SelectedLanguage",
+              "displayName": "SelectedLanguage",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "LastUpdated",
+              "displayName": "LastUpdated",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1080,
+        2400
+      ],
+      "id": "1c387b7e-c068-4eda-bc5f-61b646adaa71",
+      "name": "Save Follow-up to Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tw0mIXrZ59qfgZsM",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "299bf6a3-556b-4752-818c-9530e672d3ed",
+              "name": "newState",
+              "value": "END",
+              "type": "string"
+            },
+            {
+              "id": "7802b3c6-a71c-48ff-8140-33191b1f9d2d",
+              "name": "aiResponse",
+              "value": "={{ $('Parse Follow-up Response').item.json.confirmationMessage }}",
+              "type": "string"
+            },
+            {
+              "id": "794c2b05-1b2d-42b7-995e-c224fde670cd",
+              "name": "newHistory",
+              "value": "={{\n  (() => {\n    // Get history loaded from DB via 'Prepare State & Defaults'\n    const loadedHistory = $('Prepare State & Defaults').item.json.conversationHistory;\n    // Get user message from the same source\n    const userMsg = $('Prepare State & Defaults').item.json.userMessage;\n    // Get the AI response passed INTO this Set node from the preceding node (e.g., Parse AI node or AI Agent)\n    // *** IMPORTANT: Check the input data of THIS Set node to confirm the field name for the AI response ***\n    // It might be $json.aiResponse, $json.output, $json.nextMessage, $json.confirmationMessage, etc.\n    // Let's assume it's usually stored in 'aiResponse' field you defined in these Set nodes\n    const aiResp = $json.aiResponse;\n\n    // Ensure history is an array\n    const history = Array.isArray(loadedHistory) ? [...loadedHistory] : [];\n\n    // Add current turn's user message (if valid)\n    if (userMsg && typeof userMsg === 'string' && userMsg.trim() !== '') {\n       history.push({ type: 'human', data: { content: userMsg } });\n    }\n    // Add current turn's AI response (if valid)\n    if (aiResp && typeof aiResp === 'string' && aiResp.trim() !== '') {\n       history.push({ type: 'ai', data: { content: aiResp } });\n    }\n\n    // Optional: Limit history size (e.g., keep last 10 pairs = 20 entries)\n    const maxHistory = 20;\n    return history.slice(-maxHistory);\n  })()\n}}",
+              "type": "array"
+            },
+            {
+              "id": "28fd4a3c-95c7-4a72-91c6-5ffb80bf2ba4",
+              "name": "=chatId",
+              "value": "={{ $('Prepare State & Defaults').item.json.chatId }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1280,
+        2400
+      ],
+      "id": "b507d6e6-fc6c-4f47-a1e4-0daaaad0549b",
+      "name": "Set State: END"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ff8e5922-fe1c-4659-b0e4-e01d10e6890d",
+              "name": "newState",
+              "value": "WAITING_FOR_LANGUAGE",
+              "type": "string"
+            },
+            {
+              "id": "464b5e0d-36ae-4032-b2ae-eafbd679585e",
+              "name": "aiResponse",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            },
+            {
+              "id": "4a2ad6ab-a050-4d2d-9f42-4d6f9d2bcf2b",
+              "name": "chatId",
+              "value": "={{ $('Prepare State & Defaults').item.json.chatId }}",
+              "type": "string"
+            },
+            {
+              "id": "c26c0f40-1819-4508-a502-030066ce1717",
+              "name": "newHistory",
+              "value": "={{\n  (() => {\n    // Get history loaded from DB via 'Prepare State & Defaults'\n    const loadedHistory = $('Prepare State & Defaults').item.json.conversationHistory;\n    // Get user message from the same source\n    const userMsg = $('Prepare State & Defaults').item.json.userMessage;\n    // Get the AI response passed INTO this Set node from the preceding node (e.g., Parse AI node or AI Agent)\n    // *** IMPORTANT: Check the input data of THIS Set node to confirm the field name for the AI response ***\n    // It might be $json.aiResponse, $json.output, $json.nextMessage, $json.confirmationMessage, etc.\n    // Let's assume it's usually stored in 'aiResponse' field you defined in these Set nodes\n    const aiResp = $json.aiResponse;\n\n    // Ensure history is an array\n    const history = Array.isArray(loadedHistory) ? [...loadedHistory] : [];\n\n    // Add current turn's user message (if valid)\n    if (userMsg && typeof userMsg === 'string' && userMsg.trim() !== '') {\n       history.push({ type: 'human', data: { content: userMsg } });\n    }\n    // Add current turn's AI response (if valid)\n    if (aiResp && typeof aiResp === 'string' && aiResp.trim() !== '') {\n       history.push({ type: 'ai', data: { content: aiResp } });\n    }\n\n    // Optional: Limit history size (e.g., keep last 10 pairs = 20 entries)\n    const maxHistory = 20;\n    return history.slice(-maxHistory);\n  })()\n}}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1280,
+        380
+      ],
+      "id": "66d5f2f9-5ae0-472f-be52-20cd2c648cd0",
+      "name": "Set State: WAITING_FOR_LANGUAGE"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Initialize an empty object for our output data\nlet outputData = {};\nlet aiOutput = ''; // Initialize aiOutput to handle potential early errors\n\ntry {\n  // 1. Check if input JSON and the 'output' field exist\n  if (!$json || typeof $json.output === 'undefined') {\n    throw new Error(\"Input data ($json or $json.output) is missing.\");\n  }\n\n  aiOutput = $json.output; // Get the raw output\n\n  // 2. Clean the output string (remove potential markdown and trim)\n  const cleanedOutput = aiOutput.replace(/```json\\n?|\\n?```/g, '').trim();\n\n  // 3. Check if the cleaned output is empty (JSON.parse('') fails)\n  if (!cleanedOutput) {\n      throw new Error(\"Cleaned AI output is empty after removing markdown/trimming.\");\n  }\n\n  // 4. Parse the JSON\n  const parsed = JSON.parse(cleanedOutput);\n\n  // 5. Populate the outputData object with parsed values (using defaults)\n  outputData.selectedLanguage = parsed.selectedLanguage || 'Unknown';\n  outputData.nextMessage = parsed.nextMessage || \"Sorry, I couldn't understand that. Please choose a language: English, Kannada, Tamil, Telugu, Hindi.\";\n\n} catch (error) {\n  // 6. Handle errors during parsing\n  console.error(\"Error parsing AI Language & Pref Question:\", error);\n  // Log the raw input that caused the error, if available\n  if (aiOutput) {\n      console.error(\"Raw AI output was:\", aiOutput);\n  } else {\n       console.error(\"Raw AI input ($json.output) was likely missing or undefined.\");\n  }\n\n  // Populate the outputData object with default error values\n  outputData.selectedLanguage = 'Unknown';\n  outputData.nextMessage = \"Sorry, there was an technical issue processing your language choice. Please choose again: English, Kannada, Tamil, Telugu, Hindi.\";\n}\n\n// 7. Return the standard n8n item structure\nreturn { json: outputData };"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        740,
+        680
+      ],
+      "id": "5a5e1247-0ec4-4867-a115-f682c67bcea6",
+      "name": "Parse AI Language & Pref Question"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "27dd57c9-776e-416e-9aca-83d41a0fa78d",
+              "name": "newState",
+              "value": "ASKING_RESPONSE_PREFERENCE",
+              "type": "string"
+            },
+            {
+              "id": "1b3c4cd4-dfae-435f-b261-4c39cb91002b",
+              "name": "aiResponse",
+              "value": "={{ $('Parse AI Language & Pref Question').item.json.nextMessage }}",
+              "type": "string"
+            },
+            {
+              "id": "7ce21f44-d688-46bb-87f7-40ac0776b80f",
+              "name": "selectedLanguage",
+              "value": "={{ $('Parse AI Language & Pref Question').item.json.selectedLanguage }}",
+              "type": "string"
+            },
+            {
+              "id": "7d4836b7-f958-495b-aac0-15c0d58f6d36",
+              "name": "newHistory",
+              "value": "={{\n  (() => {\n    // Get history loaded from DB via 'Prepare State & Defaults'\n    const loadedHistory = $('Prepare State & Defaults').item.json.conversationHistory;\n    // Get user message from the same source\n    const userMsg = $('Prepare State & Defaults').item.json.userMessage;\n    // Get the AI response passed INTO this Set node from the preceding node (e.g., Parse AI node or AI Agent)\n    // *** IMPORTANT: Check the input data of THIS Set node to confirm the field name for the AI response ***\n    // It might be $json.aiResponse, $json.output, $json.nextMessage, $json.confirmationMessage, etc.\n    // Let's assume it's usually stored in 'aiResponse' field you defined in these Set nodes\n    const aiResp = $json.aiResponse;\n\n    // Ensure history is an array\n    const history = Array.isArray(loadedHistory) ? [...loadedHistory] : [];\n\n    // Add current turn's user message (if valid)\n    if (userMsg && typeof userMsg === 'string' && userMsg.trim() !== '') {\n       history.push({ type: 'human', data: { content: userMsg } });\n    }\n    // Add current turn's AI response (if valid)\n    if (aiResp && typeof aiResp === 'string' && aiResp.trim() !== '') {\n       history.push({ type: 'ai', data: { content: aiResp } });\n    }\n\n    // Optional: Limit history size (e.g., keep last 10 pairs = 20 entries)\n    const maxHistory = 20;\n    return history.slice(-maxHistory);\n  })()\n}}",
+              "type": "array"
+            },
+            {
+              "id": "ed9d47d5-f2c0-4b72-b54b-0693a655a4e1",
+              "name": "chatId",
+              "value": "={{ $('Prepare State & Defaults').item.json.chatId }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1280,
+        840
+      ],
+      "id": "31006c27-d9ae-4d8a-88f1-f3b90913b0f7",
+      "name": "ASKING_RESPONSE_PREFERENCE"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        420,
+        1220
+      ],
+      "id": "f0d857eb-2b3b-4b97-857a-ebcdf3af8d73",
+      "name": "Google Gemini Chat Model16",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "HzUbMxuj31f3gNlB",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "let outputData = {};\nlet aiOutput = ''; // Initialize aiOutput to handle potential early errors\n\ntry {\n  // 1. Check if input exists\n  if (!$json || typeof $json.output === 'undefined') {\n    throw new Error(\"Input data ($json or $json.output) is missing.\");\n  }\n  aiOutput = $json.output; // Get the raw output\n\n  // 2. Clean the output string\n  // **** THIS LINE WAS MISSING IN YOUR PASTED SNIPPET ****\n  const cleanedOutput = aiOutput.replace(/```json\\n?|\\n?```/g, '').trim();\n\n  // 3. Check if cleanedOutput is empty\n  if (!cleanedOutput) {\n      throw new Error(\"Cleaned AI output is empty after removing markdown/trimming.\");\n  }\n\n  // 4. Parse the JSON\n  const parsed = JSON.parse(cleanedOutput);\n\n  // 5. Extract preference-specific data with defaults\n  outputData.selectedPreference = parsed.preference || 'Unknown';\n  // **** CORRECTED THE STRING QUOTES HERE ****\n  outputData.confirmationAndInterestMessage = parsed.confirmationMessage || 'Sorry, I didn\\'t catch that. Please reply with \\'Text\\' or \\'Voice\\'';\n\n} catch (error) {\n  // 6. Handle errors\n  console.error(\"Error parsing AI Preference Response:\", error); // Specific node name\n  if (aiOutput) {\n      console.error(\"Raw AI output was:\", aiOutput);\n  } else {\n       console.error(\"Raw AI input ($json.output) was likely missing or undefined.\");\n  }\n\n  outputData.selectedPreference = 'Unknown';\n  outputData.confirmationAndInterestMessage = 'Sorry, there was an issue. Please reply with \\'Text\\' or \\'Voice\\'';\n}\n\ntry {\n    outputData.chatId = $('Prepare State & Defaults').item.json.chatId;\n    outputData.selectedLanguage = $('Prepare State & Defaults').item.json.selectedLanguage;\n    outputData.userMessage = $('Prepare State & Defaults').item.json.userMessage;\n} catch(passthroughError) {\n    console.warn(\"Could not pass through all expected data in Parse AI Preference Response:\", passthroughError);\n    outputData.chatId = outputData.chatId || null;\n    outputData.selectedLanguage = outputData.selectedLanguage || 'English';\n    outputData.userMessage = outputData.userMessage || null;\n}\nreturn { json: outputData };"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        900,
+        1060
+      ],
+      "id": "4e32a365-86ef-457b-ac83-87a016613ea0",
+      "name": "Parse AI Preference Response"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "74cad33e-0f03-4b9c-a74b-ee748242b2f6",
+              "name": "newState",
+              "value": "ASKING_RESPONSE_PREFERENCE",
+              "type": "string"
+            },
+            {
+              "id": "e03f2777-d790-4421-92e9-f12c41a66caa",
+              "name": "=aiResponse",
+              "value": "={{ $('Parse AI Preference Response').item.json.confirmationAndInterestMessage }}",
+              "type": "string"
+            },
+            {
+              "id": "71c1d975-d95c-46b5-a2b4-ff401076dcef",
+              "name": "selectedLanguage",
+              "value": "={{ $('Parse AI Preference Response').item.json.selectedLanguage }}",
+              "type": "string"
+            },
+            {
+              "id": "717e0aa7-3f8a-4f33-927d-3b4e13d2a900",
+              "name": "newHistory",
+              "value": "={{\n  (() => {\n    // Get history loaded from DB via 'Prepare State & Defaults'\n    const loadedHistory = $('Prepare State & Defaults').item.json.conversationHistory;\n    // Get user message from the same source\n    const userMsg = $('Prepare State & Defaults').item.json.userMessage;\n    // Get the AI response passed INTO this Set node from the preceding node (e.g., Parse AI node or AI Agent)\n    // *** IMPORTANT: Check the input data of THIS Set node to confirm the field name for the AI response ***\n    // It might be $json.aiResponse, $json.output, $json.nextMessage, $json.confirmationMessage, etc.\n    // Let's assume it's usually stored in 'aiResponse' field you defined in these Set nodes\n    const aiResp = $json.aiResponse;\n\n    // Ensure history is an array\n    const history = Array.isArray(loadedHistory) ? [...loadedHistory] : [];\n\n    // Add current turn's user message (if valid)\n    if (userMsg && typeof userMsg === 'string' && userMsg.trim() !== '') {\n       history.push({ type: 'human', data: { content: userMsg } });\n    }\n    // Add current turn's AI response (if valid)\n    if (aiResp && typeof aiResp === 'string' && aiResp.trim() !== '') {\n       history.push({ type: 'ai', data: { content: aiResp } });\n    }\n\n    // Optional: Limit history size (e.g., keep last 10 pairs = 20 entries)\n    const maxHistory = 20;\n    return history.slice(-maxHistory);\n  })()\n}}",
+              "type": "array"
+            },
+            {
+              "id": "8bcbc957-8ac2-42e3-9bba-2d598edacbf8",
+              "name": "chatId",
+              "value": "={{ $('Prepare State & Defaults').item.json.chatId }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1280,
+        1040
+      ],
+      "id": "7e19db61-1900-4797-8671-2f5d87a73cf2",
+      "name": "Set State: ASKING_RESPONSE_PREFERENCE (Retry)"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "33df4541-272c-4334-9d53-8309174bb376",
+              "name": "newState",
+              "value": "WAITING_FOR_INTEREST",
+              "type": "string"
+            },
+            {
+              "id": "4a05ff41-9bd5-4966-a7d2-4f084446e821",
+              "name": "aiResponse",
+              "value": "={{ $('Parse AI Preference Response').item.json.confirmationAndInterestMessage }}",
+              "type": "string"
+            },
+            {
+              "id": "d5db6401-2bc1-4d60-9deb-85cd61c338f8",
+              "name": "selectedLanguage",
+              "value": "={{ $('Parse AI Preference Response').item.json.selectedLanguage }}",
+              "type": "string"
+            },
+            {
+              "id": "b79c0c37-3566-48e7-90dd-70d52ec64fa0",
+              "name": "selectedPreference",
+              "value": "={{ $('Parse AI Preference Response').item.json.selectedPreference }}",
+              "type": "string"
+            },
+            {
+              "id": "7f4c65e0-5b83-4b4a-a5e6-5bbf28280da4",
+              "name": "newHistory",
+              "value": "={{\n  (() => {\n    // Get history loaded from DB via 'Prepare State & Defaults'\n    const loadedHistory = $('Prepare State & Defaults').item.json.conversationHistory;\n    // Get user message from the same source\n    const userMsg = $('Prepare State & Defaults').item.json.userMessage;\n    // Get the AI response passed INTO this Set node from the preceding node (e.g., Parse AI node or AI Agent)\n    // *** IMPORTANT: Check the input data of THIS Set node to confirm the field name for the AI response ***\n    // It might be $json.aiResponse, $json.output, $json.nextMessage, $json.confirmationMessage, etc.\n    // Let's assume it's usually stored in 'aiResponse' field you defined in these Set nodes\n    const aiResp = $json.aiResponse;\n\n    // Ensure history is an array\n    const history = Array.isArray(loadedHistory) ? [...loadedHistory] : [];\n\n    // Add current turn's user message (if valid)\n    if (userMsg && typeof userMsg === 'string' && userMsg.trim() !== '') {\n       history.push({ type: 'human', data: { content: userMsg } });\n    }\n    // Add current turn's AI response (if valid)\n    if (aiResp && typeof aiResp === 'string' && aiResp.trim() !== '') {\n       history.push({ type: 'ai', data: { content: aiResp } });\n    }\n\n    // Optional: Limit history size (e.g., keep last 10 pairs = 20 entries)\n    const maxHistory = 20;\n    return history.slice(-maxHistory);\n  })()\n}}",
+              "type": "array"
+            },
+            {
+              "id": "80c972a2-8135-4098-adbd-f046bbd33c28",
+              "name": "chatId",
+              "value": "={{ $('Prepare State & Defaults').item.json.chatId }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1280,
+        1220
+      ],
+      "id": "20eada5c-eb62-4e8e-bebf-df189aa62767",
+      "name": "Set State: WAITING_FOR_INTEREST & Pref"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "34e61b5e-6a10-4a11-a6b1-4096b8a1b010",
+              "leftValue": "={{ $('Prepare State & Defaults').item.json.responsePreference }}",
+              "rightValue": "Voice",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1600,
+        1320
+      ],
+      "id": "c108bb37-4758-480c-a903-59ed25670519",
+      "name": "If Voice Preferred?1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ `https://api.elevenlabs.io/v1/text-to-speech/${$('Set Voice and Model ID for Language1').item.json.selectedVoiceId}` }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "actionNetworkApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "xi-api-key",
+              "value": "sk_428a13bc68e4d9a9f155c74d5f924d9210f313ffb52554d6"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "text",
+              "value": "={{ $('If Voice Preferred?1').item.json.aiResponse }}"
+            },
+            {
+              "name": "model_id",
+              "value": "eleven_multilingual_v2"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1940,
+        1180
+      ],
+      "id": "9e27cb79-86bb-4f51-9c5c-1f532b0c805c",
+      "name": "Generate Voice via ElevenLabs API1",
+      "credentials": {
+        "actionNetworkApi": {
+          "id": "ahclbiIV9ghnKd8Y",
+          "name": "Action Network account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1857e1e5-ae23-42d4-a529-1704d2f5f11b",
+              "name": "selectedVoiceId",
+              "value": "={{\n  const voiceMap = {\n    'English': 'kqVT88a5QfII1HNAEPTJ',\n    'Hindi':   'HP3OkBOPWanmqpjL7XVM',\n    'Kannada': 'yt40uMsmnhVftG8ngHsz',\n    'Tamil':   'gCr8TeSJgJaeaIoV4RWH',\n    'Telugu':  '29vD33N1CtxCmqQRPOHJ'\n  }  const userLanguage = $json.selectedLanguage || 'English';\n\n  const voiceId = voiceMap[userLanguage];\n\n  const resultVoiceId = voiceId || 'kqVT88a5QfII1HNAEPTJ';\n\n  return resultVoiceId;\n}}",
+              "type": "string"
+            },
+            {
+              "id": "eea7e5d7-4543-45b2-b86d-6d1aad1eed0c",
+              "name": "",
+              "value": "=",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1780,
+        1180
+      ],
+      "id": "957eb2ca-d9a2-4c90-b728-68f56b14d7e9",
+      "name": "Set Voice and Model ID for Language1"
+    },
+    {
+      "parameters": {
+        "operation": "sendAudio",
+        "chatId": "={{ $json.chatId }}",
+        "binaryData": true,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2120,
+        1180
+      ],
+      "id": "b3513ef6-5e2e-4017-b1f8-74d42e925939",
+      "name": "Send Telegram Voice Note1",
+      "webhookId": "18a4d45d-41a0-4f19-8891-4fd38af86e0f",
+      "alwaysOutputData": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "KQQmdAin1gigJdjL",
+          "name": "Telegram account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Conversation History:\\n{{ JSON.stringify($('Prepare State & Defaults').item.json.conversationHistory) }}\\n\\nUser message: {{ $('Prepare State & Defaults').item.json.userMessage }}",
+        "options": {
+          "systemMessage": "You are an assistant for Optimo Capital. The user's language is {{ $('Get Current State').item.json.selectedLanguage }}.\nThey were just asked if they prefer responses as 'Text' or 'Voice'.\nAnalyze the \"User message\": {{ $('Get Current State').item.json.userMessage }}\nDetermine their preference.\nOutput ONLY a JSON object:\n{\n  \"preference\": \"Text\" | \"Voice\" | \"Unknown\",\n  \"confirmationMessage\": \"<A short confirmation in their language, followed by the question about loan interest>\"\n}\n\nExample (User says 'Voice' in English):\n{\n  \"preference\": \"Voice\",\n  \"confirmationMessage\": \"Okay, I'll respond with voice notes. Are you interested in taking a property loan from Optimo Capital? (Yes/No)\"\n}\n\nExample (User says 'ಟೆಕ್ಸ್ಟ್' in Kannada):\n{\n  \"preference\": \"Text\",\n  \"confirmationMessage\": \"ಸರಿ, ನಾನು ಪಠ್ಯದೊಂದಿಗೆ ಪ್ರತಿಕ್ರಿಯಿಸುತ್ತೇನೆ. ನೀವು ಆಪ್ಟಿಮೊ ಕ್ಯಾಪಿಟಲ್‌ನಿಂದ ಪ್ರಾಪರ್ಟಿ ಲೋನ್ ತೆಗೆದುಕೊಳ್ಳಲು ಆಸಕ್ತಿ ಹೊಂದಿದ್ದೀರಾ? (ಹೌದು/ಇಲ್ಲ)\"\n}\n\nIf the preference is unclear, set preference to \"Unknown\" and the confirmationMessage should ask them to choose 'Text' or 'Voice' again."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        400,
+        1060
+      ],
+      "id": "d49ff5b8-aafd-4bc7-b783-cb58cb6a5bc7",
+      "name": "AI Agent - Process output preference1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "1a0499d5-1c71-4e07-b3a7-ee06ce2bae5f",
+              "leftValue": "={{ $json.selectedPreference }}",
+              "rightValue": "Unknown",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1080,
+        1060
+      ],
+      "id": "dd7b9a62-2c97-4827-848f-22a04ba7f525",
+      "name": "If output Preference Unknown?"
+    },
+    {
+      "parameters": {
+        "content": "# Optimo Capital Outreach Agent",
+        "height": 80,
+        "width": 580
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        680,
+        260
+      ],
+      "typeVersion": 1,
+      "id": "0d64dcb8-b6ce-4840-9be6-f8a62bff22df",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "conversations",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "chat_id",
+              "condition": "eq",
+              "keyValue": "={{ $json.chatId }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        1360
+      ],
+      "id": "59fec688-6213-4c28-ab81-867935b68118",
+      "name": "Get State from DB",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "8rG3S0GQV4wqjnBc",
+          "name": "Supabase account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "conversations",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "current_state",
+              "fieldValue": "={{ $('If Voice Preferred?1').item.json.newState }}"
+            },
+            {
+              "fieldId": "conversation_history",
+              "fieldValue": "={{ $('If Voice Preferred?1').item.json.newHistory }}"
+            },
+            {
+              "fieldId": "selected_language",
+              "fieldValue": "={{ $('If Voice Preferred?1').item.json.selectedLanguage }}"
+            },
+            {
+              "fieldId": "response_preference",
+              "fieldValue": "={{ $('If Voice Preferred?1').item.json.selectedPreference }}"
+            },
+            {
+              "fieldId": "chat_id",
+              "fieldValue": "={{ $json.result.chat.id }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2720,
+        1200
+      ],
+      "id": "e44c114b-9950-46a4-b1e4-1e6837409a1f",
+      "name": "Save State to DB",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "8rG3S0GQV4wqjnBc",
+          "name": "Supabase account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d7ff2267-80f1-4d8f-9ec3-664e833a16f3",
+              "name": "currentState",
+              "value": "={{ $json.current_state ?? 'START' }}",
+              "type": "string"
+            },
+            {
+              "id": "8527d1da-5729-4425-9c4e-654cbace1e71",
+              "name": "conversationHistory",
+              "value": "={{ $json.conversation_history ?? [] }}",
+              "type": "array"
+            },
+            {
+              "id": "4dc3bed4-8f9f-4892-932f-7e06588bac36",
+              "name": "selectedLanguage",
+              "value": "={{ $json.selected_language ?? 'English' }}",
+              "type": "string"
+            },
+            {
+              "id": "2ca3f4e9-d049-4460-acab-b37b8391ef23",
+              "name": "responsePreference",
+              "value": "={{ $json.response_preference ?? 'text' }}",
+              "type": "string"
+            },
+            {
+              "id": "b2f8894b-0dd0-4d55-9033-3e42604db3e4",
+              "name": "userMessage",
+              "value": "={{ $('Telegram Trigger').item.json.message }}",
+              "type": "string"
+            },
+            {
+              "id": "e721b005-59c9-4710-847c-6ff4190a120e",
+              "name": "chatId",
+              "value": "={{ $('Set Chat ID').item.json.chatId }}",
+              "type": "string"
+            },
+            {
+              "id": "ce2ce6b3-cbd7-4b1e-a588-566af4f85008",
+              "name": "advisorRequest",
+              "value": "={{ $json.advisorRequest ?? [] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        20,
+        1360
+      ],
+      "id": "bdf1ca01-8e53-4a51-82b7-afa249003c3b",
+      "name": "Prepare State & Defaults"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.interest }}",
+                    "rightValue": "Yes",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "88f41720-ab12-4321-bd1f-62fb33df1270"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "cad4e041-fba3-4809-928b-7532cde928b2",
+                    "leftValue": "={{ $json.interest }}",
+                    "rightValue": "No",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "9e91fa16-8bd4-4813-9d01-b42d464718a5",
+                    "leftValue": "={{ $json.interest }}",
+                    "rightValue": "Unknown",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1080,
+        1580
+      ],
+      "id": "d5169308-5db1-4d2a-adbb-9421b7053b3d",
+      "name": "Switch on Interest"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        2320,
+        1280
+      ],
+      "id": "00c1a156-30ce-401d-88ed-30ccc12c4e4e",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "6048a056-c259-40ec-baae-88591210d35e",
+              "leftValue": "={{ $('If Voice Preferred?1').item.json.newState }}",
+              "rightValue": "WAITING_FOR_LANGUAGE",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2500,
+        1280
+      ],
+      "id": "c84fd3c9-9945-4d7a-85bf-e6120bbc74ea",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "conversations",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "chat_id",
+              "condition": "eq",
+              "keyValue": "={{ $json.result.chat.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "selected_language",
+              "fieldValue": "={{ $('If Voice Preferred?1').item.json.selectedLanguage }}"
+            },
+            {
+              "fieldId": "current_state",
+              "fieldValue": "={{ $('If Voice Preferred?1').item.json.newState }}"
+            },
+            {
+              "fieldId": "response_preference",
+              "fieldValue": "={{ $('If Voice Preferred?1').item.json.selectedPreference }}"
+            },
+            {
+              "fieldId": "conversation_history",
+              "fieldValue": "={{ $('If Voice Preferred?1').item.json.newHistory }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2720,
+        1400
+      ],
+      "id": "97551aa2-2230-4244-b392-33ef6be608fd",
+      "name": "Supabase",
+      "credentials": {
+        "supabaseApi": {
+          "id": "8rG3S0GQV4wqjnBc",
+          "name": "Supabase account 2"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -860,
+        1900
+      ],
+      "id": "925b2338-18c2-4a58-a535-c02b6d22aa40",
+      "name": "When clicking ‘Test workflow’",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1K-M-muRoX5lI6qLMt1qxG4bo8ZqiP55p_Q3-rxrOLzo",
+          "mode": "list",
+          "cachedResultName": "optimoDATA",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1K-M-muRoX5lI6qLMt1qxG4bo8ZqiP55p_Q3-rxrOLzo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1K-M-muRoX5lI6qLMt1qxG4bo8ZqiP55p_Q3-rxrOLzo/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Status",
+              "lookupValue": "Pending"
+            }
+          ]
+        },
+        "options": {
+          "returnFirstMatch": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -640,
+        1900
+      ],
+      "id": "48728043-2471-4e72-a871-b6502dbf4222",
+      "name": "Get First Pending Contact",
+      "alwaysOutputData": false,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tw0mIXrZ59qfgZsM",
+          "name": "Google Sheets account 2"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "recipientPhoneNumber": "=state_{phoneNumber}, history_{phoneNumber}, etc., from static data)",
+        "textBody": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        -420,
+        1900
+      ],
+      "id": "2f131323-e241-40cf-a15a-5b082dd5661c",
+      "name": "Send WhatsApp Greeting",
+      "webhookId": "5fa391fa-b5eb-41a4-a1e6-50c026b9dc55",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "nDBibYX6wtdCkpYK",
+          "name": "WhatsApp account 2"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "877c0560-c612-4bda-bf00-570174580baf",
+              "name": "phoneNumber",
+              "value": "={{ $('Get First Pending Contact').item.json.PhoneNumber }}",
+              "type": "string"
+            },
+            {
+              "id": "6c7810a3-df6f-4283-bcfb-ee26a77cf873",
+              "name": "newState",
+              "value": "={{ [ { type: 'ai', data: { content: $('Generate Initial Greeting').item.json.output } } ] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -200,
+        1900
+      ],
+      "id": "f7b06853-2566-4969-afcc-9bedb3b8c072",
+      "name": "Prepare Initial Static Data",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3d34294e-b000-4023-a749-2adb9d674084",
+              "name": "=state_{{ $json.phoneNumber }}",
+              "value": "={{ $json.newState }}",
+              "type": "string"
+            },
+            {
+              "id": "fcf7f58b-ce37-4714-86df-cd7bbf2d6134",
+              "name": "=history_{{ $json.phoneNumber }}",
+              "value": "={{ $json.newHistory }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        20,
+        1900
+      ],
+      "id": "cd312601-6fb6-4f8e-9c43-4e493f5e565f",
+      "name": "Save Initial State",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "recipientPhoneNumber": "={{ $json.phoneNumber }}",
+        "textBody": "={{ $json.aiResponse }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        2220,
+        740
+      ],
+      "id": "91677c2a-e122-4a67-9946-6b76a6e4b4e5",
+      "name": "WhatsApp Business Cloud",
+      "webhookId": "fc243c40-f8b7-4539-935e-a2f9e6e6d757",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "nDBibYX6wtdCkpYK",
+          "name": "WhatsApp account 2"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "media",
+        "additionalFields": {
+          "mediaFileName": "={{ $('Upload Audio Media').item.json.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        1960,
+        740
+      ],
+      "id": "8946984c-c278-4f52-973a-05bdf06b0cf6",
+      "name": "WhatsApp Business Cloud1",
+      "webhookId": "414d9e96-dc7a-49d8-b750-8b92e7072d29",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "nDBibYX6wtdCkpYK",
+          "name": "WhatsApp account 2"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## WhatsApp Nodes are Disabled for testing Agent through Telegram triggers\n\n###   - Goal: Target channel is WhatsApp (see disabled nodes for proactive outreach).\n###   - Current: Using Telegram Trigger for easier development & testing.\n###   - Reason: Telegram Bot API is often simpler/cheaper to start with than WhatsApp Business API.\n###   - Logic: Core AI and state management logic is largely transferable.\n\n",
+        "height": 480,
+        "width": 1180,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -940,
+        1680
+      ],
+      "typeVersion": 1,
+      "id": "1795aedf-5571-43e1-8647-23abc02c192e",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "height": 380,
+        "width": 640,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1840,
+        620
+      ],
+      "typeVersion": 1,
+      "id": "43db9e45-e255-413e-931b-0cc9d7b38d4c",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "# Credentials Required!\n\n### Below are the API links in the requested [Name](URL) format:\n\n### 1. [Telegram Bot API](https://core.telegram.org/bots/api): Setup required for Telegram Trigger, Send Telegram Response, Send Telegram Voice Note. Get your bot token from BotFather within Telegram.\n### 2. [Google Gemini API](https://developers.generativeai.google): Needed for all Google Gemini Chat Model nodes. Generate an API key via Google AI Studio or Google Cloud.\n### 3. [Google Sheets API](https://developers.google.com/sheets/api): Required for Save Language, Save Follow-up, and other nodes. Set up OAuth 2.0 credentials in Google Cloud Console.\n### 4. [ElevenLabs API](https://api.elevenlabs.io/v1): Used by the Generate Voice via ElevenLabs API node for text-to-speech. Obtain your API key from your ElevenLabs account.\n### 5. SupaBase Uses the chatId to query the conversations table in Supabase\n### 5. [WhatsApp Business Platform API](https://developers.facebook.com/docs/whatsapp): Needed for WhatsApp nodes (e.g., Send WhatsApp Greeting, WhatsApp Business Cloud). Requires setting up a Meta Business account and configuring the API.\n\n### Ensure these are configured before running live.\n\n",
+        "height": 500,
+        "width": 720
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -640,
+        560
+      ],
+      "typeVersion": 1,
+      "id": "9512f5d9-6d85-4a9b-8036-521e85b79f47",
+      "name": "Sticky Note2"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent - Greet & Ask Language",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Set Chat ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Chat ID": {
+      "main": [
+        [
+          {
+            "node": "Get State from DB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "State Router": {
+      "main": [
+        [
+          {
+            "node": "AI Agent - Greet & Ask Language",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "AI Agent - Process Lang & Ask Interest",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "AI Agent - Process output preference1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "AI Agent - Process Interest & Ask Next",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "AI Agent - Process Qualifications & Calculate",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "AI Agent - Process Follow-up Time",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If Voice Preferred?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent - Greet & Ask Language": {
+      "main": [
+        [
+          {
+            "node": "Set State: WAITING_FOR_LANGUAGE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Telegram Response": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "AI Agent - Process Lang & Ask Interest": {
+      "main": [
+        [
+          {
+            "node": "Parse AI Language & Pref Question",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model12": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent - Process Lang & Ask Interest",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Language Unknown": {
+      "main": [
+        [
+          {
+            "node": "Set State: WAITING_FOR_LANGUAGE (Retry)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Save Language to Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set State: WAITING_FOR_LANGUAGE (Retry)": {
+      "main": [
+        [
+          {
+            "node": "If Voice Preferred?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Language to Sheets": {
+      "main": [
+        [
+          {
+            "node": "ASKING_RESPONSE_PREFERENCE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent - Process Interest & Ask Next": {
+      "main": [
+        [
+          {
+            "node": "Parse AI Interest Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model13": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent - Process Interest & Ask Next",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse AI Interest Response": {
+      "main": [
+        [
+          {
+            "node": "Switch on Interest",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set State: WAITING_FOR_INTEREST (Retry) (NEW Node)": {
+      "main": [
+        [
+          {
+            "node": "If Voice Preferred?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set State: WAITING_FOR_QUALIFICATIONS": {
+      "main": [
+        [
+          {
+            "node": "If Voice Preferred?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set State: WAITING_FOR_FOLLOWUP_TIME": {
+      "main": [
+        [
+          {
+            "node": "If Voice Preferred?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent - Process Qualifications & Calculate": {
+      "main": [
+        [
+          {
+            "node": "Parse AI Qualification Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model14": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent - Process Qualifications & Calculate",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse AI Qualification Response": {
+      "main": [
+        [
+          {
+            "node": "Route Qualification Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route Qualification Status": {
+      "main": [
+        [
+          {
+            "node": "Set State: Ask Mortgage",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set State: Ask Advisor",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set State: Re-ask Qualification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set State: Ask Mortgage": {
+      "main": [
+        [
+          {
+            "node": "If Voice Preferred?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set State: Ask Advisor": {
+      "main": [
+        [
+          {
+            "node": "If Voice Preferred?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set State: Re-ask Qualification": {
+      "main": [
+        [
+          {
+            "node": "If Voice Preferred?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent - Process Follow-up Time": {
+      "main": [
+        [
+          {
+            "node": "Parse Follow-up Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model15": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent - Process Follow-up Time",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Follow-up Response": {
+      "main": [
+        [
+          {
+            "node": "Save Follow-up to Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Follow-up to Sheets": {
+      "main": [
+        [
+          {
+            "node": "Set State: END",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set State: END": {
+      "main": [
+        [
+          {
+            "node": "If Voice Preferred?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set State: WAITING_FOR_LANGUAGE": {
+      "main": [
+        [
+          {
+            "node": "If Voice Preferred?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse AI Language & Pref Question": {
+      "main": [
+        [
+          {
+            "node": "If Language Unknown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ASKING_RESPONSE_PREFERENCE": {
+      "main": [
+        [
+          {
+            "node": "If Voice Preferred?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model16": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent - Process output preference1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse AI Preference Response": {
+      "main": [
+        [
+          {
+            "node": "If output Preference Unknown?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set State: ASKING_RESPONSE_PREFERENCE (Retry)": {
+      "main": [
+        [
+          {
+            "node": "If Voice Preferred?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set State: WAITING_FOR_INTEREST & Pref": {
+      "main": [
+        [
+          {
+            "node": "If Voice Preferred?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Voice Preferred?1": {
+      "main": [
+        [
+          {
+            "node": "Set Voice and Model ID for Language1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Telegram Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Voice via ElevenLabs API1": {
+      "main": [
+        [
+          {
+            "node": "Send Telegram Voice Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Voice and Model ID for Language1": {
+      "main": [
+        [
+          {
+            "node": "Generate Voice via ElevenLabs API1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Telegram Voice Note1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent - Process output preference1": {
+      "main": [
+        [
+          {
+            "node": "Parse AI Preference Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If output Preference Unknown?": {
+      "main": [
+        [
+          {
+            "node": "Set State: ASKING_RESPONSE_PREFERENCE (Retry)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set State: WAITING_FOR_INTEREST & Pref",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get State from DB": {
+      "main": [
+        [
+          {
+            "node": "Prepare State & Defaults",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare State & Defaults": {
+      "main": [
+        [
+          {
+            "node": "State Router",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch on Interest": {
+      "main": [
+        [
+          {
+            "node": "Set State: WAITING_FOR_QUALIFICATIONS",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set State: WAITING_FOR_FOLLOWUP_TIME",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set State: WAITING_FOR_INTEREST (Retry) (NEW Node)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Save State to DB",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get First Pending Contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get First Pending Contact": {
+      "main": [
+        [
+          {
+            "node": "Send WhatsApp Greeting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send WhatsApp Greeting": {
+      "main": [
+        [
+          {
+            "node": "Prepare Initial Static Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Initial Static Data": {
+      "main": [
+        [
+          {
+            "node": "Save Initial State",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "6d0f67b7-8983-47a1-bd08-066e5dc8782c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "47546ee9d3ea2b68192a1febab849c1cd2b30403e0524ca2db246fb30b30350a"
+  },
+  "id": "BNBYAdz0BIL5JGN8",
+  "tags": []
+}
